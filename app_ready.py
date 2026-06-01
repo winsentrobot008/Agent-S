@@ -1,11 +1,14 @@
 # app_ready.py
 import logging
 import os
+import json
 from fastapi import FastAPI
+from fastapi import Request
 from datetime import datetime
 
 LOG_FILE = "agent_s_startup.log"
 READY_FILE = "agent_s.ready"
+QUEUE_FILE = "bridge_queue.json"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,6 +29,23 @@ def health():
 @app.get("/ready")
 def ready():
     return {"status": "ready" if os.path.exists(READY_FILE) else "starting"}
+
+def append_task(task: dict):
+    if not os.path.exists(QUEUE_FILE):
+        with open(QUEUE_FILE, "w") as f:
+            json.dump([], f)
+    with open(QUEUE_FILE, "r") as f:
+        queue = json.load(f)
+    queue.append(task)
+    with open(QUEUE_FILE, "w") as f:
+        json.dump(queue, f, indent=2)
+
+@app.post("/task")
+async def receive_task(request: Request):
+    data = await request.json()
+    append_task(data)
+    logger.info("Received task: %s", data)
+    return {"status": "received", "task_id": data.get("id")}
 
 def mark_ready():
     with open(READY_FILE, "w", encoding="utf-8") as f:
