@@ -13,5 +13,25 @@
     "id": "push-local-maneki-ai",
     "type": "code",
     "payload": "cd C:\\Users\\aoogoost\\Desktop\\Pojekt\\Maneki-AI; git add .; git commit -m \"update UI\"; git push"
+  },
+  {
+    "id": "push-local-maneki-ai",
+    "type": "code",
+    "payload": "cd C:\\Users\\aoogoost\\Desktop\\Pojekt\\Maneki-AI; git add .; git commit -m \"update UI\"; git push"
+  },
+  {
+    "id": "push-local-maneki-ai",
+    "type": "code",
+    "payload": "cd C:\\Users\\aoogoost\\Desktop\\Pojekt\\Maneki-AI; git add .; git commit -m \"update UI\"; git push"
+  },
+  {
+    "id": "restart-agent-s",
+    "type": "code",
+    "payload": "taskkill /F /IM python.exe && cd C:\\Users\\aoogoost\\Desktop\\Pojekt\\github.com\\winsentrobot008\\Agent-S && start python app.py"
+  },
+  {
+    "id": "deploy-cloud-agent-s",
+    "type": "code",
+    "payload": "cd C:/Users/aoogoost/Desktop/Pojekt/github.com/winsentrobot008/Agent-S && echo 'flask\nrequests\ngunicorn' > requirements.txt && sed -i 's/app.run.*/import os\\nif __name__ == \"__main__\":\\n    port = int(os.environ.get(\"PORT\", 5005))\\n    app.run(host=\"0.0.0.0\", port=port)/' app.py && git init && git remote remove origin 2>/dev/null; git remote add origin https://github.com/winsentrobot008/Agent-S.git && git add . && git commit -m 'auto deploy cloud AGENT-S' && git branch -M main && git push -u origin main"
   }
 ]
